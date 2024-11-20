@@ -31,8 +31,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/user_widget_info" />
         </receiver>
-
-        <service android:name=".widget.UserWidgetService" android:exported="true" />
     </application>
 
     <uses-permission android:name="android.permission.BODY_SENSORS" />
