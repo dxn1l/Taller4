@@ -34,18 +34,20 @@ class UserWidgetProvider : AppWidgetProvider() {
         private fun updateAppWidget(context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int) {
             val views = RemoteViews(context.packageName, R.layout.widget_user)
 
+            // Set up the intent that starts the UpdateService, which will
+            // perform the update, and attach it to a PendingIntent.
             val intent = Intent(context, UserWidgetService::class.java)
             val pendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             views.setOnClickPendingIntent(R.id.button_update, pendingIntent)
 
-
+            // Fetch the user names and update the widget
             FirebaseDataBaseRepository().getUsers(
                 onSuccess = { users ->
                     val userNames = users.joinToString("\n") { it.name }
                     views.setTextViewText(R.id.text_user_names, userNames)
                     appWidgetManager.updateAppWidget(appWidgetId, views)
                 },
-                onFailure = { }
+                onFailure = { /* Handle failure */ }
             )
         }
     }

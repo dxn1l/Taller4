@@ -19,14 +19,14 @@ class UserWidgetService : Service() {
         for (widgetId in allWidgetIds) {
             val views = RemoteViews(packageName, R.layout.widget_user)
 
-            // Fetch the user names and update the widget
+
             FirebaseDataBaseRepository().getUsers(
                 onSuccess = { users ->
                     val userNames = users.joinToString("\n") { it.name }
                     views.setTextViewText(R.id.text_user_names, userNames)
                     appWidgetManager.updateAppWidget(widgetId, views)
                 },
-                onFailure = { /* Handle failure */ }
+                onFailure = {  }
             )
         }
 

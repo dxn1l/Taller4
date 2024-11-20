@@ -45,18 +45,18 @@ fun ConfigurationScreen(
             event?.let {
                 val x = it.values[0]
 
-                // Change background color to black on rotation
+
                 if (x > 7 || x < -7) {
                     backgroundColor = Color.Black
                     textColor = Color.White
 
-                    // Save background color to SharedPreferences
+
                     with(sharedPreferences.edit()) {
                         putInt("backgroundColor", backgroundColor.toArgb())
                         apply()
                     }
 
-                    // Notify the parent composable about the color change
+
                     onColorChange(backgroundColor)
                 }
             }
@@ -105,13 +105,13 @@ fun ConfigurationScreen(
                 backgroundColor = Color.White
                 textColor = Color.Black
 
-                // Save background color to SharedPreferences
+
                 with(sharedPreferences.edit()) {
                     putInt("backgroundColor", backgroundColor.toArgb())
                     apply()
                 }
 
-                // Notify the parent composable about the color change
+
                 onColorChange(backgroundColor)
             }) {
                 Icon(

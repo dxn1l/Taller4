@@ -25,8 +25,6 @@ import com.example.taller4.Database.FirebaseDataBaseRepository
 import com.example.taller4.Database.User
 import androidx.compose.material3.*
 
-
-// ViewUsersScreen.kt
 @Composable
 fun ViewUsersScreen(
     firebaseDataBaseRepository: FirebaseDataBaseRepository,

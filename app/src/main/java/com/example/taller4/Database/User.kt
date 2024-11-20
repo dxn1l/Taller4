@@ -10,7 +10,6 @@ data class User(
     val age: Int,
     val gender: String,
 ){
-    // Constructor sin argumentos requerido por Firestore
     constructor() : this(
         id = "",
         name = "",
