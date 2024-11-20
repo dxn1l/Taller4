@@ -3,6 +3,9 @@ package com.example.taller4.Screens
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -90,7 +93,7 @@ fun AddUserScreen(
             )
             Text("Mujer")
         }
-        Button(
+        FloatingActionButton(
             onClick = {
                 val user = User(
                     name = name,
@@ -108,19 +111,29 @@ fun AddUserScreen(
                     Log.e("AddUserScreen", "Error adding user", exception)
                 })
             },
+            containerColor = Color.Cyan,
+            contentColor = Color.Black,
             modifier = Modifier
                 .padding(top = 16.dp)
-                .fillMaxWidth()
+                .size(72.dp)
         ) {
-            Text("Añadir Usuario" , color = textColor)
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Añadir Usuario",
+                tint = Color.Black
+            )
         }
-        Button(
+        IconButton(
             onClick = onBack,
             modifier = Modifier
                 .padding(top = 16.dp)
-                .fillMaxWidth()
+                .size(48.dp)
         ) {
-            Text("Volver a Ver Usuarios" , color = textColor)
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Volver a Ver Usuarios",
+                tint = Color.Cyan
+            )
         }
     }
 }

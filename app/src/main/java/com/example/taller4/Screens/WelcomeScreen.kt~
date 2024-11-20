@@ -45,7 +45,7 @@ fun WelcomeScreen(onViewUsersClick: () -> Unit , textColor: Color) {
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Ver Usuarios")
+            Text("Ver Usuarios" , color = textColor)
         }
     }
 

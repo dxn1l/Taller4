@@ -8,7 +8,13 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -74,25 +80,28 @@ fun ConfigurationScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Configuration Screen", color = textColor)
-        Button(
-            onClick = onBackToViewUsers,
+        Text(text = "Pantalla de Configuración", color = textColor)
+        Row(
             modifier = Modifier
-                .padding(top = 16.dp)
                 .fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("Back to View Users", color = textColor)
-        }
-        Button(
-            onClick = onBackToWelcome,
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth()
-        ) {
-            Text("Back to Welcome Screen", color = textColor)
-        }
-        Button(
-            onClick = {
+            IconButton(onClick = onBackToViewUsers) {
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "Volver a usuarios",
+                    tint = Color.Cyan
+                )
+            }
+            IconButton(onClick = onBackToWelcome) {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "volver a bienvenida",
+                    tint = Color.Cyan
+                )
+            }
+            IconButton(onClick = {
                 backgroundColor = Color.White
                 textColor = Color.Black
 
@@ -104,12 +113,13 @@ fun ConfigurationScreen(
 
                 // Notify the parent composable about the color change
                 onColorChange(backgroundColor)
-            },
-            modifier = Modifier
-                .padding(top = 16.dp)
-                .fillMaxWidth()
-        ) {
-            Text("Reset to White", color = textColor)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = "Reiniciar colores",
+                    tint = Color.Cyan
+                )
+            }
         }
     }
 }
