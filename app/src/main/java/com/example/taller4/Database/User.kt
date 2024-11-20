@@ -9,4 +9,16 @@ data class User(
     val email: String,
     val age: Int,
     val gender: String,
-)
+){
+    // Constructor sin argumentos requerido por Firestore
+    constructor() : this(
+        id = null,
+        name = "",
+        last_name = "",
+        direction = "",
+        phone = "",
+        email = "",
+        age = 0,
+        gender = ""
+    )
+}

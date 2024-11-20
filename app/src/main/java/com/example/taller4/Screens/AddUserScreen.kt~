@@ -1,6 +1,5 @@
 package com.example.taller4.Screens
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
@@ -14,9 +13,11 @@ import com.example.taller4.Database.User
 
 @Composable
 fun AddUserScreen(
+
     firebaseDataBaseRepository: FirebaseDataBaseRepository,
     onUserAdded: () -> Unit,
     onBack: () -> Unit
+
 ) {
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
@@ -99,12 +100,7 @@ fun AddUserScreen(
                     age = age.toIntOrNull() ?: 0,
                     gender = gender
                 )
-                firebaseDataBaseRepository.addUser(user, onSuccess = {
-                    Log.d("AddUserScreen", "User added successfully")
-                    onUserAdded()
-                }, onFailure = { exception ->
-                    Log.e("AddUserScreen", "Error adding user", exception)
-                })
+                firebaseDataBaseRepository.addUser(user, onSuccess = onUserAdded, onFailure = { /* Handle error */ })
             },
             modifier = Modifier
                 .padding(top = 16.dp)
