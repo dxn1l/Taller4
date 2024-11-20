@@ -36,13 +36,13 @@ fun DetailsUserScreen(
             Column(
                 modifier = Modifier.padding(16.dp)
             ) {
-                Text(text = "Nombre: ${user.name}",  style = MaterialTheme.typography.titleLarge)
-                Text(text = "Apellido: ${user.last_name}", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Dirección: ${user.direction}", style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Teléfono: ${user.phone}",  style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Email: ${user.email}",  style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Edad: ${user.age}",  style = MaterialTheme.typography.bodyLarge)
-                Text(text = "Género: ${user.gender}",  style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Nombre: ${user.name}", color = textColor, style = MaterialTheme.typography.titleLarge)
+                Text(text = "Apellido: ${user.last_name}", color = textColor, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Dirección: ${user.direction}", color = textColor, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Teléfono: ${user.phone}", color = textColor, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Email: ${user.email}", color = textColor, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Edad: ${user.age}", color = textColor, style = MaterialTheme.typography.bodyLarge)
+                Text(text = "Género: ${user.gender}", color = textColor, style = MaterialTheme.typography.bodyLarge)
             }
         }
 

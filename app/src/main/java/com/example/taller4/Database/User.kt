@@ -1,7 +1,7 @@
 package com.example.taller4.Database
 
 data class User(
-    var id: String? = null,
+    var id: String,
     val name: String,
     val last_name: String,
     val direction: String,
@@ -12,7 +12,7 @@ data class User(
 ){
     // Constructor sin argumentos requerido por Firestore
     constructor() : this(
-        id = null,
+        id = "",
         name = "",
         last_name = "",
         direction = "",

@@ -1,16 +1,15 @@
 package com.example.taller4.Screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
@@ -25,26 +24,61 @@ import androidx.compose.ui.unit.dp
 import com.example.taller4.Database.FirebaseDataBaseRepository
 import com.example.taller4.Database.User
 import androidx.compose.material3.*
-import androidx.compose.ui.res.painterResource
-import com.example.taller4.R
 
+
+// ViewUsersScreen.kt
 @Composable
 fun ViewUsersScreen(
-
     firebaseDataBaseRepository: FirebaseDataBaseRepository,
     onBack: () -> Unit,
     onAddUserClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onViewDetailsClick: (User) -> Unit,
     textColor: Color
-
 ) {
     var users by remember { mutableStateOf(listOf<User>()) }
+    var showDialog by remember { mutableStateOf(false) }
+    var userToDelete by remember { mutableStateOf<User?>(null) }
 
     LaunchedEffect(Unit) {
         firebaseDataBaseRepository.getUsers(
             onSuccess = { users = it },
             onFailure = {  }
+        )
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text(text = "Confirmar eliminación") },
+            text = { Text("¿Estás seguro de que deseas eliminar este usuario?") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        userToDelete?.let { user ->
+                            if (user.id != null) {
+                                firebaseDataBaseRepository.deleteUser(user, onSuccess = {
+                                    users = users.filter { it.id != user.id }
+                                    showDialog = false
+                                }, onFailure = { exception ->
+                                    Log.e("ViewUsersScreen", "Error deleting user", exception)
+                                    showDialog = false
+                                })
+                            } else {
+                                Log.e("ViewUsersScreen", "User ID is null")
+                                showDialog = false
+                            }
+                        }
+                    }
+                ) {
+                    Text("Aceptar")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text("Cancelar")
+                }
+            }
         )
     }
 
@@ -72,14 +106,28 @@ fun ViewUsersScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(text = user.name, style = MaterialTheme.typography.titleLarge)
-                        IconButton(
-                            onClick = { onViewDetailsClick(user) }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Info,
-                                contentDescription = "Ver Detalles",
-                                tint = Color.Cyan
-                            )
+                        Row {
+                            IconButton(
+                                onClick = { onViewDetailsClick(user) }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Info,
+                                    contentDescription = "Ver Detalles",
+                                    tint = Color.Cyan
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    userToDelete = user
+                                    showDialog = true
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Delete,
+                                    contentDescription = "Eliminar Usuario",
+                                    tint = Color.Red
+                                )
+                            }
                         }
                     }
                 }
@@ -121,6 +169,4 @@ fun ViewUsersScreen(
             )
         }
     }
-
-
 }

@@ -9,11 +9,8 @@ class FirebaseDataBaseRepository {
 
 
     fun addUser(user: User, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        userCollection.add(user)
-            .addOnSuccessListener { documentReference ->
-                user.id = documentReference.id
-                onSuccess()
-            }
+        userCollection.document(user.id).set(user)
+            .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { exception -> onFailure(exception) }
     }
 
@@ -26,8 +23,8 @@ class FirebaseDataBaseRepository {
             .addOnFailureListener { exception -> onFailure(exception) }
     }
 
-    fun deleteUser(id: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
-        userCollection.document(id).delete()
+    fun deleteUser(user: User, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        userCollection.document(user.id).delete()
             .addOnSuccessListener { onSuccess() }
             .addOnFailureListener { exception -> onFailure(exception) }
     }

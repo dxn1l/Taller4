@@ -15,6 +15,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.taller4.Database.FirebaseDataBaseRepository
 import com.example.taller4.Database.User
+import androidx.compose.ui.platform.LocalContext
+import android.widget.Toast
 
 @Composable
 fun AddUserScreen(
@@ -23,6 +25,7 @@ fun AddUserScreen(
     onBack: () -> Unit,
     textColor: Color
 ) {
+    var id by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var direction by remember { mutableStateOf("") }
@@ -30,6 +33,31 @@ fun AddUserScreen(
     var email by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("Hombre") }
+    val context = LocalContext.current
+
+    fun isValidInput(): Boolean {
+        if (id.isBlank() || name.isBlank() || lastName.isBlank() || direction.isBlank() || phone.isBlank() || email.isBlank() || age.isBlank()) {
+            Toast.makeText(context, "No puede haber ningún campo vacío", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (name.any { it.isDigit() }) {
+            Toast.makeText(context, "El nombre no puede contener números", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (lastName.any { it.isDigit() }) {
+            Toast.makeText(context, "El apellido no puede contener números", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (phone.any { !it.isDigit() }) {
+            Toast.makeText(context, "El teléfono no puede contener letras", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (age.any { !it.isDigit() }) {
+            Toast.makeText(context, "La edad no puede contener letras", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
 
     Column(
         modifier = Modifier
@@ -39,34 +67,40 @@ fun AddUserScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TextField(
+            value = id,
+            onValueChange = { id = it },
+            label = { Text("ID") },
+            modifier = Modifier.fillMaxWidth()
+        )
+        TextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nombre" ) },
+            label = { Text("Nombre") },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = lastName,
             onValueChange = { lastName = it },
-            label = { Text("Apellido" ) },
+            label = { Text("Apellido") },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = direction,
             onValueChange = { direction = it },
-            label = { Text("Dirección" ) },
+            label = { Text("Dirección") },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = phone,
             onValueChange = { phone = it },
-            label = { Text("Teléfono" ) },
+            label = { Text("Teléfono") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email" ) },
+            label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
         )
@@ -81,12 +115,12 @@ fun AddUserScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("Género:" , color = textColor)
+            Text("Género:", color = textColor)
             RadioButton(
                 selected = gender == "Hombre",
                 onClick = { gender = "Hombre" }
             )
-            Text("Hombre" , color = textColor)
+            Text("Hombre", color = textColor)
             RadioButton(
                 selected = gender == "Mujer",
                 onClick = { gender = "Mujer" }
@@ -95,21 +129,24 @@ fun AddUserScreen(
         }
         FloatingActionButton(
             onClick = {
-                val user = User(
-                    name = name,
-                    last_name = lastName,
-                    direction = direction,
-                    phone = phone,
-                    email = email,
-                    age = age.toIntOrNull() ?: 0,
-                    gender = gender
-                )
-                firebaseDataBaseRepository.addUser(user, onSuccess = {
-                    Log.d("AddUserScreen", "User added successfully")
-                    onUserAdded()
-                }, onFailure = { exception ->
-                    Log.e("AddUserScreen", "Error adding user", exception)
-                })
+                if (isValidInput()) {
+                    val user = User(
+                        id = id,
+                        name = name,
+                        last_name = lastName,
+                        direction = direction,
+                        phone = phone,
+                        email = email,
+                        age = age.toIntOrNull() ?: 0,
+                        gender = gender
+                    )
+                    firebaseDataBaseRepository.addUser(user, onSuccess = {
+                        Log.d("AddUserScreen", "User added successfully")
+                        onUserAdded()
+                    }, onFailure = { exception ->
+                        Log.e("AddUserScreen", "Error adding user", exception)
+                    })
+                }
             },
             containerColor = Color.Cyan,
             contentColor = Color.Black,
