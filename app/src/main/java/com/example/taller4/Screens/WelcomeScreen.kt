@@ -17,7 +17,7 @@ import java.util.Calendar
 
 
 @Composable
-fun WelcomeScreen(onViewUsersClick: () -> Unit) {
+fun WelcomeScreen(onViewUsersClick: () -> Unit , textColor: Color) {
 
     val calendar = Calendar.getInstance()
     val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -34,7 +34,7 @@ fun WelcomeScreen(onViewUsersClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text = greeting)
+        Text(text = greeting , color = textColor)
         Button(
             onClick = onViewUsersClick,
             colors = ButtonDefaults.buttonColors(
@@ -45,7 +45,7 @@ fun WelcomeScreen(onViewUsersClick: () -> Unit) {
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Ver Usuarios")
+            Text("Ver Usuarios" , color = textColor)
         }
     }
 

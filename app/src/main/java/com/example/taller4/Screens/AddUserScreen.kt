@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.taller4.Database.FirebaseDataBaseRepository
@@ -16,7 +17,8 @@ import com.example.taller4.Database.User
 fun AddUserScreen(
     firebaseDataBaseRepository: FirebaseDataBaseRepository,
     onUserAdded: () -> Unit,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    textColor: Color
 ) {
     var name by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
@@ -36,39 +38,39 @@ fun AddUserScreen(
         TextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nombre") },
+            label = { Text("Nombre" , color = textColor) },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = lastName,
             onValueChange = { lastName = it },
-            label = { Text("Apellido") },
+            label = { Text("Apellido" , color = textColor) },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = direction,
             onValueChange = { direction = it },
-            label = { Text("Dirección") },
+            label = { Text("Dirección" , color = textColor) },
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = phone,
             onValueChange = { phone = it },
-            label = { Text("Teléfono") },
+            label = { Text("Teléfono" , color = textColor) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text("Email" , color = textColor) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             modifier = Modifier.fillMaxWidth()
         )
         TextField(
             value = age,
             onValueChange = { age = it },
-            label = { Text("Edad") },
+            label = { Text("Edad" , color = textColor) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.fillMaxWidth()
         )
@@ -76,12 +78,12 @@ fun AddUserScreen(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text("Género:")
+            Text("Género:" , color = textColor)
             RadioButton(
                 selected = gender == "Hombre",
                 onClick = { gender = "Hombre" }
             )
-            Text("Hombre")
+            Text("Hombre" , color = textColor)
             RadioButton(
                 selected = gender == "Mujer",
                 onClick = { gender = "Mujer" }
@@ -110,7 +112,7 @@ fun AddUserScreen(
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Añadir Usuario")
+            Text("Añadir Usuario" , color = textColor)
         }
         Button(
             onClick = onBack,
@@ -118,7 +120,7 @@ fun AddUserScreen(
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Volver a Ver Usuarios")
+            Text("Volver a Ver Usuarios" , color = textColor)
         }
     }
 }

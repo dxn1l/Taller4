@@ -1,5 +1,6 @@
 package com.example.taller4.Screens
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -12,7 +13,8 @@ import com.example.taller4.Database.User
 @Composable
 fun DetailsUserScreen(
     user: User,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    textColor: Color
 ) {
 
     Column(
@@ -22,13 +24,13 @@ fun DetailsUserScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Nombre: ${user.name}")
-        Text(text = "Apellido: ${user.last_name}")
-        Text(text = "Dirección: ${user.direction}")
-        Text(text = "Teléfono: ${user.phone}")
-        Text(text = "Email: ${user.email}")
-        Text(text = "Edad: ${user.age}")
-        Text(text = "Género: ${user.gender}")
+        Text(text = "Nombre: ${user.name}" , color = textColor)
+        Text(text = "Apellido: ${user.last_name}" , color = textColor)
+        Text(text = "Dirección: ${user.direction}" , color = textColor)
+        Text(text = "Teléfono: ${user.phone}" , color = textColor)
+        Text(text = "Email: ${user.email}"  , color = textColor)
+        Text(text = "Edad: ${user.age}" , color = textColor)
+        Text(text = "Género: ${user.gender}" , color = textColor)
 
         Button(
             onClick = onBack,
@@ -36,7 +38,7 @@ fun DetailsUserScreen(
                 .padding(top = 16.dp)
                 .fillMaxWidth()
         ) {
-            Text("Volver a Ver Usuarios")
+            Text("Volver a Ver Usuarios" , color = textColor)
         }
     }
 

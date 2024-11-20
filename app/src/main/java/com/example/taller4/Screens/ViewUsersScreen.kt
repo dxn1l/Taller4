@@ -24,6 +24,7 @@ fun ViewUsersScreen(
     onAddUserClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onViewDetailsClick: (User) -> Unit,
+    textColor: Color
 
 ) {
     var users by remember { mutableStateOf(listOf<User>()) }
@@ -62,7 +63,7 @@ fun ViewUsersScreen(
                             ),
                             modifier = Modifier.padding(top = 8.dp)
                         ) {
-                            Text("Ver Detalles")
+                            Text("Ver Detalles" , color = textColor)
                         }
                     }
                 }
@@ -81,7 +82,7 @@ fun ViewUsersScreen(
                     contentColor = Color.Black
                 )
             ) {
-                Text("Añadir Usuario")
+                Text("Añadir Usuario" , color = textColor)
             }
             Button(
                 onClick = onSettingsClick,
@@ -90,7 +91,7 @@ fun ViewUsersScreen(
                     contentColor = Color.Black
                 )
             ) {
-                Text("Configuración")
+                Text("Configuración" , color = textColor)
             }
             Button(
                 onClick = onBack,
@@ -99,7 +100,7 @@ fun ViewUsersScreen(
                     contentColor = Color.Black
                 )
             ) {
-                Text("Volver a Bienvenida")
+                Text("Volver a Bienvenida" , color = textColor)
             }
         }
     }
